@@ -1,4 +1,4 @@
-let Ticket = require('../models/ticket')
+let Ticket = require('../models/Ticket')
 
 function getTickets(req, res) {
     let query = Ticket.find({})

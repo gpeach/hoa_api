@@ -1,2 +1,8 @@
 node_modules
 .idea
+/.
+/10.0.0.200.pem
+/10.0.0.200-key.pem
+/localhost.pem
+/localhost-key.pem
+.env

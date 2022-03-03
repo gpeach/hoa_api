@@ -1,6 +1,5 @@
 let mongoose = require('mongoose')
-let Schema = mongoose.Schema
-let TicketSchema = new Schema({
+let TicketSchema = new mongoose.Schema({
     name: {type: String, required: true},
     description: {type: String, required: true},
     createdAt: {type: Date, default: Date.now}

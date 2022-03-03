@@ -1,0 +1,9 @@
+GET http://localhost:3001/tickets/61b53eb0c5cfbc679ca7be89
+Accept: application/json
+
+###
+
+DELETE http://localhost:3001/tickets/61b53ef809faaa69a03c9c80
+Accept: application/json
+
+###

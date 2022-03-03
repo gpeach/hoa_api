@@ -2,6 +2,7 @@ const http = require('http')
 const https = require('https')
 const fs = require('fs')
 const express = require('express')
+require('dotenv').config()
 const certOptions = {
     // key: fs.readFileSync("./localhost-key.pem"),
     // cert: fs.readFileSync("./localhost.pem"),
@@ -15,7 +16,7 @@ let mongoose = require('mongoose')
 let morgan = require('morgan')
 let bodyParser = require('body-parser')
 let port = 3001
-let ticket = require('./app/routes/ticket')
+let ticket = require('./app/routes/Ticket')
 let config = require('config')
 let options = {
     useNewUrlParser: true,
@@ -23,7 +24,7 @@ let options = {
     connectTimeoutMS: 30000,
     useUnifiedTopology: true
 }
-mongoose.connect(config.DBHost, options)
+mongoose.connect(process.env.DB_HOST, options)
 let db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 if (config.util.getEnv('NODE_ENV') !== 'test') {
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.text())
 app.use(bodyParser.json({type: 'application/json'}))
 app.use(cors())
+
 app.get('/', (req, res) => res.json({message: "Welcome to the ticket api"}))
 app.route('/tickets')
 .get(ticket.getTickets)
@@ -44,6 +46,8 @@ app.route("/tickets/:id")
 .get(ticket.getTicket)
 .delete(ticket.deleteTicket)
 .put(ticket.updateTicket)
+
+app.route('/user')
 
 
 app.listen(port)

@@ -1,5 +1,5 @@
 process.env.NODE_ENV = 'test'
-let Ticket = require('../app/models/ticket')
+let Ticket = require('../app/models/Ticket')
 
 let chai = require('chai')
 let chaiHttp = require('chai-http')
