@@ -14,7 +14,7 @@ function postTicket(req, res) {
         if (err) {
             res.send(err)
         } else {
-            res.status(201).json({message: "Ticket added successfully", ticket})
+            res.status(201).json({message: "Ticket added successfully", status: "OK", ticket})
         }
     })
 }

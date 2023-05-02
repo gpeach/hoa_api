@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const ticket = require("./Ticket");
 const router = express.Router();
+
 app.post('/tickets', verifyToken, ticket.postTicket)
 router.post('/register', async (req, res) => {
     try {

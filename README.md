@@ -10,8 +10,24 @@ yarn start to start server on port 3001
 http://10.0.0.200:3001/tickets
 yarn test to run mocha tests
 
-modified from https://www.digitalocean.com/community/tutorials/test-a-node-restful-api-with-mocha-and-chai
+get / open (health check)
+post /login open
+post /register open
+post /upload open
 
+get /tickets verify
+post /tickets verify
+get /tickets/:id verify 
+delete /tickets/:id verify 
+put /tickets/:id verify
+
+app.get /users verify
+app.post /users verify
+app.get /users/:id verify
+app.delete /users/:id verify
+app.put /users/:id verify
+
+modified from https://www.digitalocean.com/community/tutorials/test-a-node-restful-api-with-mocha-and-chai
 
 uploads
 

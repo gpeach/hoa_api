@@ -21,6 +21,7 @@ let ticket = require('./app/routes/Ticket')
 let user = require('./app/routes/User')
 let config = require('config')
 const User = require("./app/models/User");
+const multer = require('multer');
 let options = {
     useNewUrlParser: true,
     keepAlive: 1,
@@ -29,11 +30,9 @@ let options = {
     useCreateIndex: true
 }
 
-const multer = require('multer');
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // The folder where you want to store uploaded files
+        cb(null, process.env.UPLOAD_FOLDER); // The folder where you want to store uploaded files
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname); // The filename for the uploaded file
@@ -73,7 +72,6 @@ function verifyToken(req, res, next) {
         next();
     });
 }
-
 app.get('/', (req, res) => res.json({message: "Welcome to the ticket api"}))
 app.get('/tickets', verifyToken, ticket.getTickets)
 app.post('/tickets', verifyToken, ticket.postTicket)
@@ -104,7 +102,6 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
     }
     res.status(200).send({ fileName: req.file.filename, fileLocation: req.file.path });
 });
-
 app.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({email: req.body.email});
