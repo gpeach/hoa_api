@@ -13,6 +13,7 @@ const certOptions = {
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
 let app = express()
+
 let mongoose = require('mongoose')
 let morgan = require('morgan')
 let bodyParser = require('body-parser')
@@ -49,8 +50,8 @@ if (config.util.getEnv('NODE_ENV') !== 'test') {
     app.use(morgan('combined'))
 }
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(bodyParser.text())
 app.use(bodyParser.json({type: 'application/json'}))
 app.use(cors())
@@ -97,6 +98,7 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/upload', upload.single('myFile'), (req, res) => {
+    console.log(req.file, req.body)
     if (!req.file) {
         return res.status(400).send('No file uploaded');
     }
