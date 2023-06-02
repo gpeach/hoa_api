@@ -89,9 +89,12 @@ app.put('/users/:id', verifyToken, user.updateUser)
 
 app.post('/register', async (req, res) => {
     try {
-        const user = new User(req.body);
+        let user = new User(req.body);
         await user.save();
-        res.status(201).send({ message: 'User created' });
+        const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+        res.status(201).send({ message: 'Registration successful', token });
     } catch (err) {
         res.status(400).send({ error: err.message });
     }
@@ -110,12 +113,10 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(400).send({error: 'Invalid email or password'});
         }
-
         const isMatch = await user.comparePassword(req.body.password);
         if (!isMatch) {
             return res.status(400).send({error: 'Invalid email or password'});
         }
-
         const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
