@@ -1,5 +1,13 @@
 GET http://localhost:3001/tickets/61b53eb0c5cfbc679ca7be89
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM2OTgxYWJmYTkwNzY2OWEyNmIyOTUiLCJpYXQiOjE3NDg0MDgzNDcsImV4cCI6MTc0ODQxMTk0N30.aumXM2GKBvKLr3XHKIkYsILyR7ENL8RU7LLukE-WMIw
+
+###
+
+GET http://localhost:3001/tickets
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM2OTgxYWJmYTkwNzY2OWEyNmIyOTUiLCJpYXQiOjE3NDg0MDgzNDcsImV4cCI6MTc0ODQxMTk0N30.aumXM2GKBvKLr3XHKIkYsILyR7ENL8RU7LLukE-WMIw
+
 
 ###
 
@@ -7,3 +15,12 @@ DELETE http://localhost:3001/tickets/61b53ef809faaa69a03c9c80
 Accept: application/json
 
 ###
+
+POST http://localhost:3001/register
+Content-Type: application/json
+
+{
+    "username": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "securePassword123"
+}

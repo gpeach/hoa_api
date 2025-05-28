@@ -16,4 +16,7 @@ TicketSchema.pre('save', next => {
     next()
 })
 
-module.exports = mongoose.model('Ticket', TicketSchema)
+const Ticket = mongoose.models.Ticket || mongoose.model('Ticket', TicketSchema);
+
+module.exports = Ticket;
+

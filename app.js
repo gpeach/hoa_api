@@ -7,8 +7,7 @@ const certOptions = {
     // key: fs.readFileSync("./localhost-key.pem"),
     // cert: fs.readFileSync("./localhost.pem"),
 
-    key: fs.readFileSync("./10.0.0.200-key.pem"),
-    cert: fs.readFileSync("./10.0.0.200.pem"),
+    key: fs.readFileSync("./10.0.0.200-key.pem"), cert: fs.readFileSync("./10.0.0.200.pem"),
 };
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
@@ -24,23 +23,19 @@ let config = require('config')
 const User = require("./app/models/User");
 const multer = require('multer');
 let options = {
-    useNewUrlParser: true,
-    keepAlive: 1,
-    connectTimeoutMS: 30000,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+    useNewUrlParser: true, keepAlive: 1, connectTimeoutMS: 30000, useUnifiedTopology: true, useCreateIndex: true
 }
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, process.env.UPLOAD_FOLDER);
-    },
-    filename: function (req, file, cb) {
+    }, filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname);
     },
 });
 
 const upload = multer({storage: storage});
+mongoose.set('useFindAndModify', false);
 mongoose.connect(process.env.DB_HOST, options)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err))
@@ -80,13 +75,13 @@ app.post('/tickets', verifyToken, ticket.postTicket)
 app.get('/tickets/:id', verifyToken, ticket.getTicket)
 app.delete('/tickets/:id', verifyToken, ticket.deleteTicket)
 app.put('/tickets/:id', verifyToken, ticket.updateTicket)
-app.route('/user')
 
-app.get('/users', verifyToken, user.getUsers)
-app.post('/users', verifyToken, user.postUser)
-app.get('/users/:id', verifyToken, user.getUser)
-app.delete('/users/:id', verifyToken, user.deleteUser)
-app.put('/users/:id', verifyToken, user.updateUser)
+// deprecated, test and remove later
+// app.get('/users', verifyToken, user.getUsers)
+// app.post('/users', verifyToken, user.postUser)
+// app.get('/users/:id', verifyToken, user.getUser)
+// app.delete('/users/:id', verifyToken, user.deleteUser)
+// app.put('/users/:id', verifyToken, user.updateUser)
 
 app.post('/register', async (req, res) => {
     try {
