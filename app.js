@@ -1,5 +1,5 @@
 const http = require('http')
-const https = require('https')
+// const https = require('https')
 const fs = require('fs')
 const express = require('express')
 require('dotenv').config()
@@ -33,14 +33,14 @@ let options = {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, process.env.UPLOAD_FOLDER); // The folder where you want to store uploaded files
+        cb(null, process.env.UPLOAD_FOLDER);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // The filename for the uploaded file
+        cb(null, Date.now() + '-' + file.originalname);
     },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({storage: storage});
 mongoose.connect(process.env.DB_HOST, options)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err))
@@ -50,8 +50,8 @@ if (config.util.getEnv('NODE_ENV') !== 'test') {
     app.use(morgan('combined'))
 }
 
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 app.use(bodyParser.text())
 app.use(bodyParser.json({type: 'application/json'}))
 app.use(cors())
@@ -73,6 +73,7 @@ function verifyToken(req, res, next) {
         next();
     });
 }
+
 app.get('/', (req, res) => res.json({message: "Welcome to the ticket api"}))
 app.get('/tickets', verifyToken, ticket.getTickets)
 app.post('/tickets', verifyToken, ticket.postTicket)
@@ -94,9 +95,9 @@ app.post('/register', async (req, res) => {
         const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
-        res.status(201).send({ message: 'Registration successful', token });
+        res.status(201).send({message: 'Registration successful', token});
     } catch (err) {
-        res.status(400).send({ error: err.message });
+        res.status(400).send({error: err.message});
     }
 });
 
@@ -105,7 +106,7 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
     if (!req.file) {
         return res.status(400).send('No file uploaded');
     }
-    res.status(200).send({ fileName: req.file.filename, fileLocation: req.file.path });
+    res.status(200).send({fileName: req.file.filename, fileLocation: req.file.path});
 });
 app.post('/login', async (req, res) => {
     try {
